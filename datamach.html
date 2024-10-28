@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Machines list</title>
     <style>
-        /* Stylování jako v původním kódu */
         body {
             display: flex;
             font-family: Arial, sans-serif;
@@ -24,7 +23,7 @@
             margin-bottom: 20px;
         }
         table {
-            width: 100%;
+            width: 60%;
             border-collapse: collapse;
         }
         th, td {
@@ -38,9 +37,21 @@
     </style>
 </head>
 <body>
+    <div id="leftPanel">
+        <h1>Device List</h1>
+        <h2>Search Device by Serial Number</h2>
+        <input type="text" id="searchQuery" placeholder="Enter Serial Number">
+        <button onclick="findDevice()">Search</button>
+        <div id="deviceList"></div>
+    </div>
+    
+    <div id="resultPanel">
+        <h2>Results</h2>
+        <div id="deviceInfo"></div>
+    </div>
      <script>
         // Správný hash hesla
-        const correctHashedPassword = "9943324cb3f1a48a2963633905d35b97c3a24eb4b8ee84aafaef348ec3490799"; // Nahraď správným SHA-256 hashem hesla
+        const correctHashedPassword = "9943324cb3f1a48a2963633905d35b97c3a24eb4b8ee84aafaef348ec3490799"; //SHA-256 hash
 
         // Načtení hashe z localStorage
         const enteredHash = localStorage.getItem('hashedPassword');
@@ -54,20 +65,7 @@
         }
     </script>
 
-    <div id="protectedContent" style="display: block;">
-        <div id="leftPanel">
-            <h1>Device List</h1>
-            <h2>Search Device by Serial Number</h2>
-            <input type="text" id="searchQuery" placeholder="Enter Serial Number">
-            <button onclick="findDevice()">Search</button>
-            <div id="deviceList"></div>
-        </div>
 
-        <div id="resultPanel">
-            <h2>Results</h2>
-            <div id="deviceInfo"></div>
-        </div>
-    </div>
 
     <script>
         // JSON data o zařízeních
