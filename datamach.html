@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machines list</title>
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #leftPanel {
+            flex: 1;
+            margin-right: 20px;
+        }
+        #resultPanel {
+            flex: 2;
+        }
+        #deviceList {
+            border-right: 1px solid #ccc;
+            padding-right: 20px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 60%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div id="leftPanel">
+        <h1>Device List</h1>
+        <h2>Search Device by Serial Number</h2>
+        <input type="text" id="searchQuery" placeholder="Enter Serial Number">
+        <button onclick="findDevice()">Search</button>
+        <div id="deviceList"></div>
+    </div>
+    
+    <div id="resultPanel">
+        <h2>Results</h2>
+        <div id="deviceInfo"></div>
+    </div>
+
+    <script>
+        // JSON object 
+        var devices =
+
+{"R4-1274":{"SN":"R-1274","timestamp":"09.10.2024 8:25:46","Government":"WET","Type":"ADVANCE","Size":"0610","VPN region":"WORLD","VPN modem IP":"192.168.239.53","PLC AMS IP":"192.168.239.2.1.1","PLC PC IP":"192.168.239.2","OSC IP":"0","Eddy IP":"192.168.239.10","AI IP":"0","PLC variant":"OnlineWET_0610_2","PLC version":"3.4a","VISU version":"X","Customer":"SKF USA"},"R1-1225":{"SN":"R1-1225","timestamp":"09.10.2024 8:25:46","Government":"WET","Type":"STANDARD","Size":"1830","VPN region":"WORLD","VPN modem IP":"192.168.239.53","PLC AMS IP":"192.168.239.2.1.1","PLC PC IP":"192.168.250.44","OSC IP":"0","Eddy IP":"192.168.239.10","AI IP":"0","PLC variant":"OnlineWetCerBigLR","PLC version":"3.4.a","VISU version":"X","Customer":"SKF USA"},"R4-1264":{"SN":"R4-1264","timestamp":"09.10.2024 8:26:11","Government":"WET","Type":"ADVANCE AI","Size":"X","VPN region":"WORLD","VPN modem IP":"192.168.238.53","PLC AMS IP":"192.168.238.10.1.1","PLC PC IP":"192.168.238.10","OSC IP":"X","Eddy IP":"192.168.238.11","AI IP":"192.168.238.12","PLC variant":"OnlineWetCerBig","PLC version":"3.3d","VISU version":"X","Customer":"SKF AUS"},"Q-1193":{"SN":"Q-1193","timestamp":"01.10.2024 8:34:47","Government":"WET","Type":"ADVANCE AI","Size":"1014","VPN region":"WORLD","VPN modem IP":"192.168.244.53","PLC AMS IP":"192.168.244.10.1.1","PLC PC IP":"192.168.244.10","OSC IP":"0","Eddy IP":"192.168.244.52","AI IP":"192.168.244.51","PLC variant":"OnlineWetCer","PLC version":"3.2","VISU version":"X","Customer":"Shaeffler"},"R1-1233":{"SN":"R1-1233","timestamp":"01.10.2024 9:17:14","Government":"WET","Type":"STANDARD","Size":"0610","VPN region":"WORLD","VPN modem IP":"192.168.247.53","PLC AMS IP":"192.168.247.2.1.1","PLC PC IP":"192.168.247.2","OSC IP":"192.168.247.15","Eddy IP":"X","AI IP":"X","PLC variant":"OnlineWET_0610","PLC version":"3.1b","VISU version":"X","Customer":"TN POLAND"},"S1-1264":{"SN":"S1-1264","timestamp":"01.10.2024 9:18:03","Government":"WET","Type":"ADVANCE AI","Size":"0610","VPN region":"WORLD","VPN modem IP":"X","PLC AMS IP":"192.168.250.46.1.1","PLC PC IP":"192.168.250.46","OSC IP":"0","Eddy IP":"192.168.250.47","AI IP":"192.168.250.48","PLC variant":"0","PLC version":"X","VISU version":"X","Customer":"SKF AUST"},"S1-1322":{"SN":"S1-1322","timestamp":"01.10.2024 9:28:56","Government":"DRY","Type":"STANDARD","Size":"X","VPN region":"CHINA","VPN modem IP":"192.168.212.53","PLC AMS IP":"192.168.212.2.1.1","PLC PC IP":"192.168.212.2","OSC IP":"192.168.212.15","Eddy IP":"X","AI IP":"X","PLC variant":"OnlineDryV3","PLC version":"3.1a","VISU version":"X","Customer":"CHINA"},"R1-1333":{"SN":"R1-1333","timestamp":"01.10.2024 9:16:02","Government":"DRY","Type":"STANDARD","Size":"0610","VPN region":"WORLD","VPN modem IP":"192.168.215.53","PLC AMS IP":"192.168.215.2.1.1","PLC PC IP":"192.168.215.2","OSC IP":"192.168.215.15","Eddy IP":"X","AI IP":"X","PLC variant":"OnlineDryV4","PLC version":"3.1b","VISU version":"X","Customer":"TOLIA INDIE"},"R1-1230":{"SN":"R1-1230","timestamp":"01.10.2024 8:36:19","Government":"WET","Type":"STANDARD","Size":"1014","VPN region":"CHINA","VPN modem IP":"192.168.245.53","PLC AMS IP":"192.168.245.10.1.1","PLC PC IP":"192.168.245.10","OSC IP":"0","Eddy IP":"0","AI IP":"0","PLC variant":"0","PLC version":"2.6a","VISU version":"X","Customer":"CHINA"},"S1-1323":{"SN":"S1-1323","timestamp":"01.10.2024 9:29:24","Government":"DRY","Type":"STANDARD","Size":"X","VPN region":"CHINA","VPN modem IP":"192.168.213.53","PLC AMS IP":"192.168.213.2.1.1","PLC PC IP":"192.168.213.2","OSC IP":"192.168.213.15","Eddy IP":"X","AI IP":"X","PLC variant":"OnlineDryV3","PLC version":"3.1a","VISU version":"X","Customer":"CHINA"},"S2-1334":{"SN":"S2-1334","timestamp":"28.10.2024 10:49:15","Government":"DRY","Type":"STANDARD","Size":"1014","VPN region":"WORLD","VPN modem IP":"X","PLC AMS IP":"X","PLC PC IP":"192.168.250.43","OSC IP":"X","Eddy IP":"X","AI IP":"X","PLC variant":"OnlineDryV3","PLC version":"3.4a","VISU version":"X","Customer":"TOLIA INDIE"},"S1-1324":{"SN":"S1-1324","timestamp":"28.10.2024 10:49:22","Government":"DRY","Type":"STANDARD","Size":"X","VPN region":"CHINA","VPN modem IP":"192.168.214.53","PLC AMS IP":"192.168.214.2.1.1","PLC PC IP":"192.168.214.2","OSC IP":"192.168.214.15","Eddy IP":"X","AI IP":"X","PLC variant":"OnlineDryV3","PLC version":"3.1a","VISU version":"X","Customer":"CHINA"}}
+
+;
+   function displayDeviceList() {
+            var deviceListDiv = document.getElementById('deviceList');
+            deviceListDiv.innerHTML = '';
+
+            for (var serial in devices) {
+                deviceListDiv.innerHTML += '<p><a href="#" onclick="showDevice(\'' + serial + '\')">' + serial + '</a></p>';
+            }
+        }
+
+        function showDevice(serial) {
+            var device = devices[serial];
+            var deviceInfoDiv = document.getElementById('deviceInfo');
+
+            deviceInfoDiv.innerHTML = "<h3>Device Details: " + device.SN + "</h3>" +
+                                      "<table>" +
+                                      "<tr><th>Description</th><th>Data</th></tr>" +
+                                      "<tr><td>Timestamp</td><td>" + device.timestamp + "</td></tr>" +
+                                      "<tr><td>Government</td><td>" + device.Government + "</td></tr>" +
+                                      "<tr><td>Type</td><td>" + device.Type + "</td></tr>" +
+                                      "<tr><td>Size</td><td>" + device.Size + "</td></tr>" +
+                                      "<tr><td>VPN Region</td><td>" + device["VPN region"] + "</td></tr>" +
+                                      "<tr><td>VPN Modem IP</td><td>" + device["VPN modem IP"] + "</td></tr>" +
+                                      "<tr><td>PLC AMS IP</td><td>" + device["PLC AMS IP"] + "</td></tr>" +
+                                      "<tr><td>PLC PC IP</td><td>" + device["PLC PC IP"] + "</td></tr>" +
+                                      "<tr><td>OSC IP</td><td>" + device["OSC IP"] + "</td></tr>" +
+                                      "<tr><td>Eddy IP</td><td>" + device["Eddy IP"] + "</td></tr>" +
+                                      "<tr><td>AI IP</td><td>" + device["AI IP"] + "</td></tr>" +
+                                      "<tr><td>PLC Variant</td><td>" + device["PLC variant"] + "</td></tr>" +
+                                      "<tr><td>PLC Version</td><td>" + device["PLC version"] + "</td></tr>" +
+                                      "<tr><td>VISU Version</td><td>" + device["VISU version"] + "</td></tr>" +
+                                      "<tr><td>Customer</td><td>" + device.Costumer + "</td></tr>" +
+                                      "</table>";
+        }
+
+        function findDevice() {
+            var searchQuery = document.getElementById('searchQuery').value.toLowerCase();
+            var deviceInfoDiv = document.getElementById('deviceInfo');
+            var results = [];
+
+            deviceInfoDiv.innerHTML = '';
+
+            for (var serial in devices) {
+                if (serial.toLowerCase().includes(searchQuery)) {
+                    var device = devices[serial];
+                    results.push("<h3>Result for: " + device.SN + "</h3>" +
+                                 "<table>" +
+                                 "<tr><th>Description</th><th>Data</th></tr>" +
+                                 "<tr><td>Timestamp</td><td>" + device.timestamp + "</td></tr>" +
+                                 "<tr><td>Government</td><td>" + device.Government + "</td></tr>" +
+                                 "<tr><td>Type</td><td>" + device.Type + "</td></tr>" +
+                                 "<tr><td>Size</td><td>" + device.Size + "</td></tr>" +
+                                 "<tr><td>VPN Region</td><td>" + device["VPN region"] + "</td></tr>" +
+                                 "<tr><td>VPN Modem IP</td><td>" + device["VPN modem IP"] + "</td></tr>" +
+                                 "<tr><td>PLC AMS IP</td><td>" + device["PLC AMS IP"] + "</td></tr>" +
+                                 "<tr><td>PLC PC IP</td><td>" + device["PLC PC IP"] + "</td></tr>" +
+                                 "<tr><td>OSC IP</td><td>" + device["OSC IP"] + "</td></tr>" +
+                                 "<tr><td>Eddy IP</td><td>" + device["Eddy IP"] + "</td></tr>" +
+                                 "<tr><td>AI IP</td><td>" + device["AI IP"] + "</td></tr>" +
+                                 "<tr><td>PLC Variant</td><td>" + device["PLC variant"] + "</td></tr>" +
+                                 "<tr><td>PLC Version</td><td>" + device["PLC version"] + "</td></tr>" +
+                                 "<tr><td>VISU Version</td><td>" + device["VISU version"] + "</td></tr>" +
+                                 "<tr><td>Customer</td><td>" + device.Costumer + "</td></tr>" +
+                                 "</table><br>");
+                }
+            }
+
+            if (results.length > 0) {
+                deviceInfoDiv.innerHTML = results.join("");
+            } else {
+                deviceInfoDiv.innerHTML = "<p>No matching device found.</p>";
+            }
+        }
+
+        // Zobrazí seznam zařízení při načtení stránky
+        displayDeviceList();
+    </script>
+</body>
+</html>
+
