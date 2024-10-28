@@ -1,63 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
-        .login-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            border: none;
-            border-radius: 3px;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
+    <title>Index Page</title>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Please enter the password</h2>
-        <input type="password" id="password" placeholder="Enter password">
-        <button onclick="redirectToSecondPage()">Submit</button>
-    </div>
+    <h1>Welcome to the Protected Area</h1>
+    <form id="passwordForm">
+        <label for="password">Zadejte heslo:</label>
+        <input type="password" id="password" required>
+        <button type="submit">Odeslat</button>
+    </form>
 
     <script>
-        async function hashPassword(password) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(password);
-            const hash = await crypto.subtle.digest('SHA-256', data);
-            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
-        }
+        // Heslo je skryto zde, v praxi by se mělo kontrolovat na serveru
+        const correctPassword = "tajneHeslo"; // Toto heslo by normálně mělo být na serveru
 
-        async function redirectToSecondPage() {
-            const password = document.getElementById("password").value;
-            const hashedPassword = await hashPassword(password);
-            window.location.href = `datamach.html?hash=${hashedPassword}`;
+        document.getElementById('passwordForm').onsubmit = function(event) {
+            event.preventDefault(); // Zabráníme defaultnímu odeslání formuláře
+            const password = document.getElementById('password').value;
+
+            // Hashování hesla
+            sha256(password).then(hashedPassword => {
+                // Uložení hash do localStorage
+                localStorage.setItem('hashedPassword', hashedPassword);
+                // Přesměrování na druhou stránku
+                window.location.href = 'datamach.html';
+            });
+        };
+
+        // Funkce pro hashování
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message); // Encode as (utf-8) Uint8Array
+            const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer); // Hash
+            const hashArray = Array.from(new Uint8Array(hashBuffer)); // Hash jako pole bytů
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // Převeď na hex
         }
     </script>
 </body>
