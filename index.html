@@ -6,7 +6,7 @@
     <title>Index Page</title>
 </head>
 <body>
-    <h1>Welcome to the Protected Area</h1>
+    <h1>Login</h1>
     <form id="passwordForm">
         <label for="password">Zadejte heslo:</label>
         <input type="password" id="password" required>
@@ -14,11 +14,8 @@
     </form>
 
     <script>
-        // Heslo je skryto zde, v praxi by se mělo kontrolovat na serveru
-        const correctPassword = "tajneHeslo"; // Toto heslo by normálně mělo být na serveru
-
         document.getElementById('passwordForm').onsubmit = function(event) {
-            event.preventDefault(); // Zabráníme defaultnímu odeslání formuláře
+            event.preventDefault(); // Zabránit defaultnímu odeslání formuláře
             const password = document.getElementById('password').value;
 
             // Hashování hesla
@@ -37,6 +34,7 @@
             const hashArray = Array.from(new Uint8Array(hashBuffer)); // Hash jako pole bytů
             return hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // Převeď na hex
         }
+
     </script>
 </body>
 </html>

@@ -63,7 +63,7 @@
             alert("Přístup zamítnut: Nesprávné heslo.");
             window.location.href = "index.html"; // Přesměrování na index.html
         }
-// Vymazání localStorage po opuštění stránky
+        // Vymazání localStorage po opuštění stránky
         window.addEventListener('beforeunload', function () {
             localStorage.removeItem('hashedPassword'); // Vymaže hash hesla z localStorage
         });
