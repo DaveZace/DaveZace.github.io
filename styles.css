@@ -1,0 +1,93 @@
+body {
+    display: flex;
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f9f9f9;
+    color: #333;
+	flex-direction: column;
+
+}
+
+#container {
+    display: flex; /* Flexbox pro rozložení panelů */
+    width: 100%; /* Zajišťuje, že kontejner zabírá celou šířku */
+}
+
+#leftPanel {
+    flex: 1; /* Levý panel zabírá 1 část */
+    margin-right: 20px; /* Odstup mezi panely */
+    background-color: #fff; /* Pozadí levého panelu */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#resultPanel {
+    flex: 2; /* Pravý panel zabírá 2 části, čímž bude širší */
+    background-color: #fff; /* Pozadí pravého panelu */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 8px 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007acc;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005999;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #007acc;
+    color: #fff;
+}
+
+tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #e0e0e0;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
