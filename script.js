@@ -19,6 +19,7 @@ window.addEventListener('beforeunload', function () {
     localStorage.removeItem('hashedPassword');
 });
 
+
 // Načtení JSON dat ze vzdáleného souboru
 async function fetchDevices() {
     const response = await fetch('https://raw.githubusercontent.com/DaveZace/DaveZace.github.io/main/snMachines.json');
@@ -32,13 +33,16 @@ async function initialize() {
     devices = await fetchDevices();
     displayDeviceList();
 }
-
+4
 function displayDeviceList() {
     var deviceListDiv = document.getElementById('deviceList');
     deviceListDiv.innerHTML = '';
 
     for (var serial in devices) {
-        deviceListDiv.innerHTML += '<p><a href="#" onclick="showDevice(\'' + serial + '\')">' + serial + '</a></p>';
+        var device = devices[serial];
+        var statusColor = device.Status === 'Done' ? 'blue' : 'red';
+
+        deviceListDiv.innerHTML += `<p><a href="#" onclick="showDevice('${serial}')" style="color: ${statusColor};">${serial}</a></p>`;
     }
 }
 
@@ -64,6 +68,7 @@ function showDevice(serial) {
                               "<tr><td>PLC Version</td><td>" + device["PLC version"] + "</td></tr>" +
                               "<tr><td>VISU Version</td><td>" + device["VISU version"] + "</td></tr>" +
                               "<tr><td>Customer</td><td>" + device.Customer + "</td></tr>" +
+							  "<tr><td>Status</td><td>" + device.Status + "</td></tr>" +
                               "</table>";
 }
 
@@ -79,7 +84,7 @@ function findDevice() {
             var device = devices[serial];
             results.push("<h3>Result for: " + device.SN + "</h3>" +
                          "<table>" +
-                         "<tr><th>Description</th><th>Data</th></tr>" +
+                         "<tr><th>Description</th><th>Data</th></tr>" +                      
                          "<tr><td>Timestamp</td><td>" + device.timestamp + "</td></tr>" +
                          "<tr><td>Government</td><td>" + device.Government + "</td></tr>" +
                          "<tr><td>Type</td><td>" + device.Type + "</td></tr>" +
@@ -95,11 +100,17 @@ function findDevice() {
                          "<tr><td>PLC Version</td><td>" + device["PLC version"] + "</td></tr>" +
                          "<tr><td>VISU Version</td><td>" + device["VISU version"] + "</td></tr>" +
                          "<tr><td>Customer</td><td>" + device.Customer + "</td></tr>" +
-                         "</table>");
+						 "<tr><td>Status</td><td>" + device.Status + "</td></tr>" +
+                         "</table><br>");
         }
     }
 
-    deviceInfoDiv.innerHTML = results.length > 0 ? results.join('') : "<p>No results found.</p>";
+    if (results.length > 0) {
+        deviceInfoDiv.innerHTML = results.join("");
+    } else {
+        deviceInfoDiv.innerHTML = "<p>No matching device found.</p>";
+    }
 }
 
-document.addEventListener("DOMContentLoaded", initialize);
+// Inicializuje načítání dat při načtení stránky
+initialize();

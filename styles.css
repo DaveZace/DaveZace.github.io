@@ -41,6 +41,15 @@
 	a:hover {
 		color: #005999;
 	}
+	/* Styl odkazu pro stav "ok" */
+	a.status-ok {
+		color: #007acc;
+	}
+
+	/* Styl odkazu pro stav jiný než "ok" */
+	a.status-not-ok {
+		color: #d9534f;
+	}
 	input[type="text"] {
 		padding: 8px;
 		font-size: 16px;
