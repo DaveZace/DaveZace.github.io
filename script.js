@@ -69,7 +69,7 @@ function showDevice(serial) {
                               "<tr><td>VISU Version</td><td>" + device["VISU version"] + "</td></tr>" +
                               "<tr><td>Customer</td><td>" + device.Customer + "</td></tr>" +
 							  "<tr><td>Status</td><td>" + device.Status + "</td></tr>" +
-							  "<tr><td>Status</td><td>" + device["IP local"] + "</td></tr>" +
+							  "<tr><td>IP local</td><td>" + device["IP local"] + "</td></tr>" +
                               "</table>";
 }
 
@@ -102,7 +102,7 @@ function findDevice() {
                          "<tr><td>VISU Version</td><td>" + device["VISU version"] + "</td></tr>" +
                          "<tr><td>Customer</td><td>" + device.Customer + "</td></tr>" +
 						 "<tr><td>Status</td><td>" + device.Status + "</td></tr>" +
-						 "<tr><td>Status</td><td>" + device["IP local"] + "</td></tr>" +
+						 "<tr><td>IP local</td><td>" + device["IP local"] + "</td></tr>" +
                          "</table><br>");
         }
     }
